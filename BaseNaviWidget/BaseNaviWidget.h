@@ -19,8 +19,8 @@ public:
     ~BaseNaviWidget(){
 
     }
-
-    virtual QString getText() = 0;
+public slots:
+    virtual void setText() = 0;
 
 private:
 

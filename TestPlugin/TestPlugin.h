@@ -1,6 +1,9 @@
 #pragma once 
 
 #include "BaseNaviWidget.h"  
+#include "ui_TestPlugin.h"
+
+namespace Ui { class TestPlugin; }
 
 class TestPlugin : public BaseNaviWidget {
     Q_OBJECT
@@ -8,8 +11,10 @@ class TestPlugin : public BaseNaviWidget {
     Q_INTERFACES(BaseNaviWidget)
 public:
     explicit TestPlugin(QWidget *parent = nullptr);
-    virtual QString getText() override;
+    ~TestPlugin();
+public slots:
+    virtual void setText() override;
+private:
+    Ui::TestPlugin *ui;
 };
  
- 
-

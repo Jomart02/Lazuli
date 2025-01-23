@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     QVector<BaseNaviWidget*> plugins = pluginLoader.loadPlugins(DEFAULT_DATA_DIR);
 
     for (BaseNaviWidget* plugin : plugins) {
-        qDebug() <<  plugin->getText();
+        plugin->show();
     }
 
     return app.exec(); 
