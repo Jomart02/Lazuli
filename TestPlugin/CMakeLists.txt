@@ -27,7 +27,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 add_library(${PROJECT_NAME} SHARED ${SRCS})
 
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
-target_link_libraries(${PROJECT_NAME} Qt6::Widgets BaseNaviWidget)
+target_link_libraries(${PROJECT_NAME} Qt6::Widgets BaseNaviWidgetLib)
 
 
 # Создаем выходную директорию, если она не существует
