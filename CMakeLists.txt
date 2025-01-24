@@ -10,7 +10,6 @@ set(CMAKE_AUTOUIC ON)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/PluginLoader/)
 
-add_subdirectory(./BaseNaviWidget)
 
 set(HDRS
     ./include/PluginLoader/PluginLoader.h
@@ -25,6 +24,8 @@ set(QRCS
 
 )
 
+add_subdirectory(./BaseNaviWidget)
+
 set(CMAKE_AUTOUIC_SEARCH_PATHS 
 
 )
@@ -33,5 +34,5 @@ find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 add_executable(${PROJECT_NAME} ${SRCS} ${QRCS} ${HDRS})
 
-target_include_directories(BaseNaviWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(${PROJECT_NAME} Qt6::Widgets BaseNaviWidget)
+# target_include_directories(BaseNaviWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME} Qt6::Widgets BaseNaviWidgetLib)
