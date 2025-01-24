@@ -1,0 +1,4 @@
+[submodule "BaseNaviWidget"]
+	path = BaseNaviWidget
+	url = https://github.com/Jomart02/BaseNaviWidget.git
+	branch = master
