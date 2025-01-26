@@ -9,15 +9,17 @@ set(CMAKE_AUTOUIC ON)
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/PluginLoader/)
-
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/MainWindow/)
 
 set(HDRS
     ./include/PluginLoader/PluginLoader.h
+    ./include/MainWindow/MainWindow.h
 )
 
 set(SRCS
     ./src/main.cpp
     ./src/PluginLoader/PluginLoader.cpp
+    ./src/MainWindow/MainWindow.cpp
 )
 
 set(QRCS
@@ -27,7 +29,7 @@ set(QRCS
 add_subdirectory(./BaseNaviWidget)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS 
-
+    ui/MainWindow/
 )
 
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
