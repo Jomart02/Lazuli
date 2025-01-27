@@ -10,16 +10,19 @@ set(CMAKE_AUTOUIC ON)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/PluginLoader/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/MainWindow/)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/UdpSender/)
 
 set(HDRS
     ./include/PluginLoader/PluginLoader.h
     ./include/MainWindow/MainWindow.h
+    ./include/UdpSender/udp_sender.h
 )
 
 set(SRCS
     ./src/main.cpp
     ./src/PluginLoader/PluginLoader.cpp
     ./src/MainWindow/MainWindow.cpp
+    ./src/UdpSender/udp_sender.cpp
 )
 
 set(QRCS
@@ -32,9 +35,9 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     ui/MainWindow/
 )
 
-find_package(Qt6 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Network REQUIRED)
 
 add_executable(${PROJECT_NAME} ${SRCS} ${QRCS} ${HDRS})
 
 # target_include_directories(BaseNaviWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(${PROJECT_NAME} Qt6::Widgets BaseNaviWidgetLib)
+target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Network BaseNaviWidgetLib)
