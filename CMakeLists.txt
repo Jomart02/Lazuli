@@ -11,11 +11,13 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/PluginLoader/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/MainWindow/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/UdpSender/)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/SendWidget/)
 
 set(HDRS
     ./include/PluginLoader/PluginLoader.h
     ./include/MainWindow/MainWindow.h
     ./include/UdpSender/udp_sender.h
+    ./include/SendWidget/SendWidget.h
 )
 
 set(SRCS
@@ -23,6 +25,7 @@ set(SRCS
     ./src/PluginLoader/PluginLoader.cpp
     ./src/MainWindow/MainWindow.cpp
     ./src/UdpSender/udp_sender.cpp
+    ./src/SendWidget/SendWidget.cpp
 )
 
 set(QRCS
@@ -33,6 +36,7 @@ add_subdirectory(./BaseNaviWidget)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS 
     ui/MainWindow/
+    ui/SendWidget/
 )
 
 find_package(Qt6 COMPONENTS Widgets Network REQUIRED)
