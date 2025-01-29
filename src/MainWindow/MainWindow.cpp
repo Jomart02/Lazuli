@@ -58,13 +58,19 @@ void MainWindow::loadPlugins(){
         UdpSender *sender = new UdpSender("127.0.0.1",20000,this);
         senders[plugin] = sender;
         connect(plugin,&BaseNaviWidget::sendData, sender,QOverload<QStringList>::of(&UdpSender::setData));
-        connect(plugin,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+        
         ui->sendPanel->setSendParam(false, "127.0.0.1",20000);
         
         SendParam data = {"127.0.0.1",20000,false};
         item->setData(0, Qt::UserRole,QVariant::fromValue(data));
 
-        if(currentPage == nullptr) currentPage = item;
+        if(currentPage == nullptr){
+            currentPage = item;
+            connect(plugin,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+        }
+    }
+    if(currentPage){
+        ui->stackedWidget->setCurrentWidget(pageMap[currentPage]);
     }
 }
 
@@ -95,8 +101,16 @@ void MainWindow::currentPageChange(QTreeWidgetItem *current, QTreeWidgetItem *pr
     if (it != pageMap.end()) {
         BaseNaviWidget* widget = it->second;
         if(widget){
-            SendParam param = currentPage->data(0, Qt::UserRole).value<SendParam>();
+            SendParam param = current->data(0, Qt::UserRole).value<SendParam>();
             ui->sendPanel->setSendParam(param.active, param.ip, param.port);
+            ui->stackedWidget->setCurrentWidget(widget);
+            if(previous) {
+                auto itp = pageMap.find(previous);
+                if (itp != pageMap.end()) {
+                    disconnect(itp->second,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+                }
+            }
+            connect(widget,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
         }
     }
     currentPage = current;
