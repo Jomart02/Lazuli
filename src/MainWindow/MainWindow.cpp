@@ -6,7 +6,7 @@
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
     loadPlugins();
-    StyleManager::getInstance()->init();
+    StyleManager::getInstance()->init(CUSTOM_STYLES);
 
     connect(ui->ShowPages, &QAction::toggled, [=](bool checked){
         ui->treeWidget->setVisible(checked);
@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     StyleManager::getInstance()->setQssFile(objectName(),":/style/style");
     StyleManager::getInstance()->addStyle(objectName(), "day", ":/style/day");
     StyleManager::getInstance()->addStyle(objectName(), "night", ":/style/night");
-    loadCustomThemes();
+    if(StyleManager::getInstance()->isCustomStyles(CUSTOM_STYLES)) loadCustomThemes();
     // setStyleSheet(StyleManager::getInstance()->getStyle(objectName(), "day"));
 }
 
@@ -118,7 +118,7 @@ void MainWindow::loadPlugins(){
 }
 
 void MainWindow::loadCustomThemes(){
-    auto styles =  StyleManager::getInstance()->getCustomStyles();
+    auto styles =  StyleManager::getInstance()->getCustomStyles(CUSTOM_STYLES);
     if(!styles.empty()){
         for(auto style : styles){
             QAction * styleAction = new QAction(ui->menuCnbkb);
