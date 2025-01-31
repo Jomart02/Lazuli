@@ -4,12 +4,12 @@
 #include "ui_MainWindow.h"
 #include "PluginLoader.h"
 #include "udp_sender.h"
+#include "StyleManager.h"
 
 namespace Ui
 {
     class MainWindow;
 }
-#define DEFAULT_DATA_DIR QDir::toNativeSeparators(QDir::homePath()) + QDir::separator() +"test" + QDir::separator()
 
 class MainWindow : public QMainWindow
 {
@@ -36,4 +36,6 @@ class MainWindow : public QMainWindow
         std::map<QTreeWidgetItem* , BaseNaviWidget*> pageMap;
         QTreeWidgetItem* currentPage = nullptr;
         std::map<BaseNaviWidget*,UdpSender*> senders;
+        StyleManager *manS = nullptr;
+        bool aaa = true;
 };

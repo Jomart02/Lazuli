@@ -1,5 +1,6 @@
 #include "MainWindow.h"
-
+#include <QMessageBox>
+#include <QShortcut>
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
@@ -29,12 +30,31 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
                 layout->setRowStretch(1, 0); // Убираем растяжение для sendPanel
             }
         }
+        
     });
 
+    QShortcut* fullscreenHK = new QShortcut(QKeySequence(Qt::Key_F11), this);
+    connect(fullscreenHK, & QShortcut::activated, this, [=](){
+        if(isFullScreen()) showNormal();
+        else showFullScreen();
+    });
+
+    QShortcut* style = new QShortcut(QKeySequence(Qt::Key_F10), this);
+    connect(style, & QShortcut::activated, this, [=](){
+        if(aaa) setStyleSheet(manS->getStyle(objectName(), "night"));
+        else setStyleSheet(manS->getStyle(objectName(), "day"));
+        aaa = !aaa;
+    });
 
     connect(ui->sendPanel,&SendWidget::startSend,this,&MainWindow::sendStateChange);
     connect(ui->sendPanel,&SendWidget::bindParam,this,&MainWindow::bindSocket);
     connect(ui->treeWidget, & QTreeWidget::currentItemChanged, this, &MainWindow::currentPageChange);
+
+    manS = new StyleManager(this);
+    manS->setQssFile(objectName(),":/style/style");
+    manS->addStyle(objectName(), "day", ":/style/day");
+    manS->addStyle(objectName(), "night", ":/style/night");
+    setStyleSheet(manS->getStyle(objectName(), "day"));
 }
 
 MainWindow::~MainWindow(){
@@ -43,7 +63,20 @@ MainWindow::~MainWindow(){
 
 void MainWindow::loadPlugins(){
     PluginLoader pluginLoader;
-    QVector<BaseNaviWidget*> plugins = pluginLoader.loadPlugins(DEFAULT_DATA_DIR);
+    PluginLoader::ErrorCodeDir errorLoad = pluginLoader.init();
+
+    QMetaEnum metaEnumLoad = QMetaEnum::fromType<PluginLoader::ErrorCodeDir>();
+
+    if(errorLoad != PluginLoader::ErrorCodeDir::DIRECTORY_ALREADY_EXISTS){
+        const char* errorCodeStr = metaEnumLoad.valueToKey(static_cast<int>(errorLoad));
+        QTimer::singleShot(1000,[=](){
+             QMessageBox::warning(this,tr("Ошибка загрузки"),errorCodeStr);
+        });
+        return;
+    }
+
+    PluginLoader::ErrorsLoad errors;
+    QVector<BaseNaviWidget*> plugins = pluginLoader.loadPlugins(errors);
     
     for (BaseNaviWidget* plugin : plugins) {
         ui->stackedWidget->addWidget(plugin);

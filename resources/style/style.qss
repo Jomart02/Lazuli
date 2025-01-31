@@ -1,0 +1,376 @@
+
+QWidget{
+    font-family: 'Helvetica';
+    font-style: normal;
+    font-weight: bold; /*700 as default*/
+    background-color: {baseBackgroundColor};
+}
+
+QDockWidget{
+    background-color: {baseBackgroundColor};
+}
+
+
+TitleWidget QFrame{
+    background-color: #333D9A;
+    min-height: 36%;
+}
+
+TitleWidget QFrame{
+    border: 2px solid #333D9A;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+TitleWidget QLabel{
+    color:white;
+}
+
+TitleWidget QPushButton{
+    border:0;
+    background-color: transparent;
+    margin:0px;
+}
+
+
+QScrollArea { background: transparent; }
+QScrollArea > QWidget > QWidget { background: transparent; }
+QScrollArea > QWidget > QScrollBar { background: palette(base); }
+
+QWidget[ContentWidget = true]{
+    background-color: white;
+}
+
+
+/* ==================== BUTTONS ==================== */
+
+QPushButton{
+    font-size: 14px; 
+    border: 2px solid transparent; 
+    border-radius: 8px;
+}
+
+QPushButton[blue="true"],QPushButton[grey="true"]{
+    min-height: 38%;
+}
+
+QPushButton[S=true]{
+    font-size: 12px; 
+}
+
+QPushButton[grey="true"]{
+    background-color: {grayBut};
+    color: solid black;
+}
+QPushButton[grey="true"]:enabled:hover{
+    background-color: #ebebeb;
+}
+QPushButton[grey="true"]:enabled:pressed{
+    background-color: #e4e4e4;
+}
+QPushButton[grey="true"]:disabled{
+    background-color: #f0f0f0;
+    color: solid #cecece;
+}
+
+QPushButton[white="true"]{
+    background-color: {mainButColor};
+    color: {mainButTextColor};
+}
+QPushButton[white="true"]:disabled{
+    background-color: #fafafa;
+    color: #cecece;
+}
+
+QPushButton[white="true"]:enabled:hover{
+    background-color: #dfdfdf;
+    color: solid black;
+}
+
+QPushButton[white="true"]:enabled:pressed{
+    background-color: #bbbbbb;
+    color: solid black;
+} 
+
+QPushButton[white="true"][checkable="true"]{
+    border: 2px solid transparent;
+}
+
+QPushButton[white="true"][checkable="true"]:checked{
+    border: 2px solid #4150de;
+}
+
+QPushButton[blue="true"]{
+    background-color: #4150de;
+    color: white;
+}
+
+QPushButton[blue="true"]:enabled:hover{
+    background-color: #3848d6;
+}
+
+QPushButton[blue="true"]:enabled:pressed{
+    background-color: #3440b2;
+}
+QPushButton[blue="true"]:disabled{
+    background-color: #b3b9f2;
+    color: white;
+}
+
+QPushButton[green="true"]{
+    background-color: #2AB500;
+    color: white;
+}
+QPushButton[green="true"]:enabled:hover{
+    background-color: #2AB500;
+}
+QPushButton[green="true"]:enabled:pressed{
+    background-color: #2AB500;
+}
+QPushButton[green="true"]:disabled{
+    background-color: #2AB500;
+    color: solid #cecece;
+}
+
+
+CustomButton{
+    background-color: #333D9A;
+    color: white;
+    text-align: left;
+    border: none;   
+    border-radius: 0px;   
+    font-size: 12px; 
+    padding: 6px 8px 6px 8px;
+    min-height: 36%;
+}
+
+/* ======================================== */
+
+QGroupBox {
+    background-color: {groupBoxBackgroundColor};
+    border-radius: 8px;
+    margin-top: 0%;
+}
+QGroupBox[title*=""] {
+    background-color: {groupBoxBackgroundColor};
+    border-radius: 8px;
+    margin-top: 20%;
+}
+
+QGroupBox::title{
+    subcontrol-origin: margin;
+    color: #7E7E7E;
+    background-color: {baseBackgroundColor};
+}
+
+/* ======================================== */
+QRadioButton{
+    background-color: transparent;
+}
+
+QRadioButton::indicator {
+    width: 40px;
+    height: 40px;
+    image: url("{radioNo}");
+}
+QRadioButton::indicator:checked {
+
+    image: url("{radioYes}");
+}
+
+/* ======================================== */
+QCheckBox{
+    color: {labelColor};
+    font-weight: bold;
+    background-color: transparent;
+}
+
+QCheckBox::indicator {
+    width: 40px;
+    height: 40px;
+    image: url("{CheckBoxUnChecked}");
+
+}
+QCheckBox::indicator:checked {
+    image: url("{CheckBoxChecked}");
+
+}
+/* ======================================== */
+
+
+
+QLabel{ /* базовый стиль для всех qlabel */
+    color: {labelColor};
+    background-color: transparent;
+}
+QLabel[black="true"]{ /* базовый стиль для всех qlabel */
+    color:black;
+    font-weight: bold; /*700 as default*/
+}
+
+
+QLineEdit, QTimeEdit, QDateEdit , QAbstractSpinBox{
+    border: 1px solid {editBorderColor}; /* Цвет обводки */
+    border-radius: 6px;
+    background-color:{editBackgroundColor};
+    padding-left: 2px;
+    font-weight: bold;
+    font-size: 14px; 
+    height: 22px;
+    color: {editTextColor};
+}
+
+QLineEdit[M=true], QTimeEdit[M=true], QDateEdit[M=true] , QAbstractSpinBox[M=true]{
+    height: 40px;
+}
+
+/*=============СТИЛИ QScrollBar=============*/
+
+QScrollBar:vertical{
+    background: transparent; /* Убираем задний фон */
+    width: 10px; /* Устанавливаем ширину вертикальной полосы прокрутки */
+}
+QScrollBar:horizontal  {
+    background: transparent; /* Убираем задний фон */
+    height: 10px; /* Устанавливаем высоту горизонтальной полосы прокрутки */
+}
+
+QScrollBar {
+    margin: 0px; /* Убираем отступы вокруг полосы прокрутки */
+}
+
+QScrollBar::handle {
+    background: #4150DE; /* Задаем синий цвет для ползунка вертикальной полосы прокрутки */
+    border-radius: 5px; /* Делаем ползунок овальным */
+    margin: 0px; /* Убираем отступы вокруг ползунка */
+    min-height: 10px;
+}
+
+QScrollBar::handle:hover {
+    background: #3a48c8; 
+}
+QScrollBar::handle:pressed {
+    background: #3440b2 
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical,
+QScrollBar::add-line:horizontal,
+QScrollBar::sub-line:horizontal {
+    height: 0;
+}
+
+
+/*=====================================*/
+QWidget QSlider  {
+    background-color: transparent;
+}
+QSlider [valueSlider = true]{
+    height: 64px;
+}
+
+QSlider[valueSlider = true]::groove:horizontal 
+{
+	background-color: transparent;
+	height: 3px;
+    left: 6px;
+    right: 6px;
+}
+
+QSlider[valueSlider = true]::sub-page:horizontal 
+{
+    background: #4150DE;
+}
+
+
+QSlider[valueSlider = true]::add-page:horizontal 
+{
+    background: #F0F0F0;
+}
+
+
+QSlider[valueSlider = true]::handle:horizontal 
+{
+	width: 24px;
+	margin-top: -6px;
+    margin-left: -6px;
+    margin-right: -6px;
+	margin-bottom: -6px;
+
+    image:url(:/icons/slider);
+}
+
+
+/*=====================================*/
+
+QComboBox {
+    height: 40;
+    font-weight: bold; /* Установка жирного шрифта */
+    /* font-size: 11pt; */
+}
+
+QComboBox {
+    combobox-popup: 0;
+    border: 1px solid #4150DE; 
+    border-radius: 8px;
+    color: black;
+    background-color: {editBackgroundColor};
+}
+/* Стиль для выпадающего меню комбобокса */
+QComboBox QAbstractItemView {
+    color: black;    
+    border: 1px solid #4150DE;
+    border-radius: 8px;
+    selection-background-color: rgba(66, 80, 222, 0.1);
+    selection-color:black;
+}
+
+QComboBox QAbstractItemView {
+    margin-top: 0px; 
+}
+
+QComboBox QAbstractItemView::item {
+
+    height: 40;
+    border-radius: 8px;
+}
+/* Стиль при наводке на элементы меню комбобокса */
+QComboBox QAbstractItemView::item:hover {
+    border-radius: 8px;
+    background-color: rgba(66, 80, 222, 0.1);
+    padding-left: 5px;
+}
+
+QComboBox QListView{
+    outline: 0px;
+}
+
+QComboBox::drop-down 
+{
+    border: 0px; 
+    
+}
+
+QComboBox::down-arrow {
+    image: url({comboboxIcon}); /* Путь к изображению стрелки */
+    subcontrol-origin: padding;
+    subcontrol-position: right; /* Выравнивание по правому краю */
+    width: 30%;
+    height: 30%;
+}
+
+
+
+QLabel[infoWidget = true] , QPushButton[infoWidget = true]{
+    width: 104%;
+    min-height: 55%;
+}
+
+QTextEdit{
+    background-color:{editBackgroundColor};
+    border: 1px solid {editBorderColor}; /* Цвет обводки */
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px; 
+    color: {editTextColor};
+}

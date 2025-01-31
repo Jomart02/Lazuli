@@ -1,0 +1,16 @@
+{
+    "baseBackgroundColor": "#485160",
+    "grayBut": "#484848",
+    "mainButColor": "#1a1d23",
+    "mainButTextColor": "white",
+    "groupBoxBackgroundColor": "#2c313a",
+    "labelColor": "#929FB9",
+    "editBorderColor": "#444b58",
+    "editBackgroundColor": "#22272e",
+    "editTextColor": "#cecece",
+    "CheckBoxChecked": ":/icons/checked_night",
+    "CheckBoxUnChecked": ":/icons/unchecked_night",
+    "radioYes": ":/icons/radioYes_night",
+    "radioNo": ":/icons/radioNo_night",
+    "comboboxIcon": ":/icons/more"
+  }

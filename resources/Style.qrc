@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="less">Icons/expand_less.svg</file>
+        <file alias="more">Icons/expand_more.svg</file>
+        <file alias="more_black">Icons/expand_more_black.svg</file>
+        <file alias="slider">Icons/Slider.svg</file>
+        <file alias="arrow_left">Icons/arrow_left.svg</file>
+        <file alias="arrow_right">Icons/arrow_right.svg</file>
+        <file alias="close">Icons/close.svg</file>
+
+        <file alias="checked_day">Icons/yes.svg</file>
+        <file alias="unchecked_day">Icons/no.svg</file>
+        <file alias="checked_night">Icons/yes_black.svg</file>
+        <file alias="unchecked_night">Icons/no_black.svg</file>
+
+        <file alias="radioYes_day">Icons/Union.svg</file>
+        <file alias="radioNo_day">Icons/Union_uncheck.svg</file>
+        <file alias="radioYes_night">Icons/Union_black.svg</file>
+        <file alias="radioNo_night">Icons/Union_uncheck_black.svg</file>
+
+    </qresource>
+    <qresource prefix="/style">
+        <file alias="style">style/style.qss</file>
+        <file alias="day">style/day.json</file>
+        <file alias="night">style/night.json</file>
+    </qresource>
+</RCC>
