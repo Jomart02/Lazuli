@@ -55,6 +55,24 @@
    <addaction name="ShowPages"/>
    <addaction name="sendOptions"/>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>913</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuCnbkb">
+    <property name="title">
+     <string>Стили</string>
+    </property>
+    <addaction name="actionDay"/>
+    <addaction name="actionNight"/>
+   </widget>
+   <addaction name="menuCnbkb"/>
+  </widget>
   <action name="ShowPages">
    <property name="checkable">
     <bool>true</bool>
@@ -81,6 +99,28 @@
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionDay">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Day</string>
+   </property>
+   <property name="style" stdset="0">
+    <string>day</string>
+   </property>
+  </action>
+  <action name="actionNight">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Night</string>
+   </property>
+   <property name="style" stdset="0">
+    <string>night</string>
    </property>
   </action>
  </widget>

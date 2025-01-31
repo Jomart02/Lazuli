@@ -3,22 +3,22 @@
 
 PluginLoader::PluginLoader(QObject *parent) : QObject(parent) {}
 
-PluginLoader::ErrorCodeDir PluginLoader::init(){
+EnumCode::ErrorCodeDir PluginLoader::init(){
     QDir dir(PLAGIN_DATA_DIR);
 
-    QMetaEnum metaEnum = QMetaEnum::fromType<ErrorCodeDir>();
+    QMetaEnum metaEnum = QMetaEnum::fromType<EnumCode::ErrorCodeDir>();
     
-    ErrorCodeDir errorCode;
+    EnumCode::ErrorCodeDir errorCode;
     if(!dir.exists()) {
         if(!dir.mkpath(".")) {
-            const char* errorCodeStr = metaEnum.valueToKey(static_cast<int>(ErrorCodeDir::FAILED_TO_CREATE));
+            const char* errorCodeStr = metaEnum.valueToKey(static_cast<int>(EnumCode::ErrorCodeDir::FAILED_TO_CREATE));
             qWarning() << errorCodeStr << PLAGIN_DATA_DIR;
-            return ErrorCodeDir::FAILED_TO_CREATE;
+            return EnumCode::ErrorCodeDir::FAILED_TO_CREATE;
         } else {
-            errorCode = ErrorCodeDir::CREATED_DIRECTORY;
+            errorCode = EnumCode::ErrorCodeDir::CREATED_DIRECTORY;
         }
     } else {
-        errorCode = ErrorCodeDir::DIRECTORY_ALREADY_EXISTS;
+        errorCode = EnumCode::ErrorCodeDir::DIRECTORY_ALREADY_EXISTS;
     }
 
     const char* errorCodeStr = metaEnum.valueToKey(static_cast<int>(errorCode));

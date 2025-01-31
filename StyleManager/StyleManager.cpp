@@ -1,5 +1,8 @@
 #include "StyleManager.h"
 #include <QFile>
+#include <QMetaEnum>
+
+StyleManager* StyleManager::_instance = nullptr;
 
 StyleManager::StyleManager(QObject *parent) : QObject(parent)
 {
@@ -7,6 +10,79 @@ StyleManager::StyleManager(QObject *parent) : QObject(parent)
 
 StyleManager::~StyleManager()
 {
+}
+
+EnumCode::ErrorCodeDir StyleManager::init(){
+    QDir dir(CUSTOM_STYLES);
+
+    QMetaEnum metaEnum = QMetaEnum::fromType<EnumCode::ErrorCodeDir>();
+    
+    EnumCode::ErrorCodeDir errorCode;
+    if(!dir.exists()) {
+        if(!dir.mkpath(".")) {
+            const char* errorCodeStr = metaEnum.valueToKey(static_cast<int>(EnumCode::ErrorCodeDir::FAILED_TO_CREATE));
+            qWarning() << errorCodeStr << CUSTOM_STYLES;
+            return EnumCode::ErrorCodeDir::FAILED_TO_CREATE;
+        } else {
+            errorCode = EnumCode::ErrorCodeDir::CREATED_DIRECTORY;
+        }
+    } else {
+        errorCode = EnumCode::ErrorCodeDir::DIRECTORY_ALREADY_EXISTS;
+    }
+
+    const char* errorCodeStr = metaEnum.valueToKey(static_cast<int>(errorCode));
+    qDebug() << errorCode << CUSTOM_STYLES;
+    return errorCode;
+}
+
+bool StyleManager::isCustomStyles(){
+    QDir dir(CUSTOM_STYLES);
+
+    // Проверяем, существует ли директория и доступна ли она для чтения
+    if (!dir.exists() || !dir.isReadable()) {
+        return false;
+    }
+
+    // Устанавливаем фильтры для поиска файлов с расширением .json
+    dir.setNameFilters(QStringList() << "*.json");
+
+    // Получаем список файлов, соответствующих фильтру
+    QFileInfoList fileList = dir.entryInfoList(QDir::Files);
+
+    // Проверяем, есть ли хотя бы один файл в списке
+    return !fileList.isEmpty();
+}
+
+StyleManager::CustomStyles StyleManager::getCustomStyles(){
+QDir dir(CUSTOM_STYLES);
+
+    // Проверяем, существует ли директория и доступна ли она для чтения
+    if (!dir.exists() || !dir.isReadable()) {
+        return {};
+    }
+
+    // Устанавливаем фильтры для поиска файлов с расширением .json
+    dir.setNameFilters(QStringList() << "*.json");
+
+    // Получаем список файлов, соответствующих фильтру
+    QFileInfoList fileList = dir.entryInfoList(QDir::Files);
+
+    // Создаем список пар "имя файла - путь к файлу"
+    QList<QPair<QString, QString>> result;
+    for (const QFileInfo &fileInfo : fileList) {
+        QString fileName = fileInfo.fileName().remove(".json"); // Имя файла без пути
+        QString filePath = fileInfo.absoluteFilePath(); // Полный путь к файлу
+        result.append(qMakePair(fileName, filePath));
+    }
+
+    return result;
+}
+
+StyleManager* StyleManager::getInstance(){
+     if (_instance == nullptr) {
+        _instance = new StyleManager();
+    }
+    return _instance;
 }
 
 void StyleManager::setQssFile(const OwnerStyle &owner, const QString &qssFilePath)

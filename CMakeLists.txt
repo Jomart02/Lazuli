@@ -20,6 +20,7 @@ set(HDRS
     ./include/UdpSender/udp_sender.h
     ./include/SendWidget/SendWidget.h
     ./StyleManager/StyleManager.h
+    ./include/global_vars.h
 )
 
 set(SRCS

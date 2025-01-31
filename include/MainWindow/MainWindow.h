@@ -24,6 +24,7 @@ class MainWindow : public QMainWindow
         void currentPageChange(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     private:
         void loadPlugins();
+        void loadCustomThemes();
     private:
 
         struct SendParam{
@@ -36,6 +37,5 @@ class MainWindow : public QMainWindow
         std::map<QTreeWidgetItem* , BaseNaviWidget*> pageMap;
         QTreeWidgetItem* currentPage = nullptr;
         std::map<BaseNaviWidget*,UdpSender*> senders;
-        StyleManager *manS = nullptr;
         bool aaa = true;
 };

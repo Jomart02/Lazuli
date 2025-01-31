@@ -1,10 +1,13 @@
 #include "MainWindow.h"
 #include <QMessageBox>
 #include <QShortcut>
+#include "global_vars.h"
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
     loadPlugins();
+    StyleManager::getInstance()->init();
+
     connect(ui->ShowPages, &QAction::toggled, [=](bool checked){
         ui->treeWidget->setVisible(checked);
         QGridLayout *layout = qobject_cast<QGridLayout*>(centralWidget()->layout());
@@ -41,20 +44,27 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
 
     QShortcut* style = new QShortcut(QKeySequence(Qt::Key_F10), this);
     connect(style, & QShortcut::activated, this, [=](){
-        if(aaa) setStyleSheet(manS->getStyle(objectName(), "night"));
-        else setStyleSheet(manS->getStyle(objectName(), "day"));
+        if(aaa) setStyleSheet(StyleManager::getInstance()->getStyle(objectName(), "night"));
+        else setStyleSheet(StyleManager::getInstance()->getStyle(objectName(), "day"));
         aaa = !aaa;
+    });
+
+    connect(ui->menuCnbkb,&QMenu::triggered, [=](QAction *action){
+        QString theme = action->property("style").toString();
+        qDebug() << theme;
+        setStyleSheet(StyleManager::getInstance()->getStyle(objectName(), theme));
     });
 
     connect(ui->sendPanel,&SendWidget::startSend,this,&MainWindow::sendStateChange);
     connect(ui->sendPanel,&SendWidget::bindParam,this,&MainWindow::bindSocket);
     connect(ui->treeWidget, & QTreeWidget::currentItemChanged, this, &MainWindow::currentPageChange);
 
-    manS = new StyleManager(this);
-    manS->setQssFile(objectName(),":/style/style");
-    manS->addStyle(objectName(), "day", ":/style/day");
-    manS->addStyle(objectName(), "night", ":/style/night");
-    setStyleSheet(manS->getStyle(objectName(), "day"));
+
+    StyleManager::getInstance()->setQssFile(objectName(),":/style/style");
+    StyleManager::getInstance()->addStyle(objectName(), "day", ":/style/day");
+    StyleManager::getInstance()->addStyle(objectName(), "night", ":/style/night");
+    loadCustomThemes();
+    // setStyleSheet(StyleManager::getInstance()->getStyle(objectName(), "day"));
 }
 
 MainWindow::~MainWindow(){
@@ -63,11 +73,11 @@ MainWindow::~MainWindow(){
 
 void MainWindow::loadPlugins(){
     PluginLoader pluginLoader;
-    PluginLoader::ErrorCodeDir errorLoad = pluginLoader.init();
+    EnumCode::ErrorCodeDir errorLoad = pluginLoader.init();
 
-    QMetaEnum metaEnumLoad = QMetaEnum::fromType<PluginLoader::ErrorCodeDir>();
+    QMetaEnum metaEnumLoad = QMetaEnum::fromType<EnumCode::ErrorCodeDir>();
 
-    if(errorLoad != PluginLoader::ErrorCodeDir::DIRECTORY_ALREADY_EXISTS){
+    if(errorLoad != EnumCode::ErrorCodeDir::DIRECTORY_ALREADY_EXISTS){
         const char* errorCodeStr = metaEnumLoad.valueToKey(static_cast<int>(errorLoad));
         QTimer::singleShot(1000,[=](){
              QMessageBox::warning(this,tr("Ошибка загрузки"),errorCodeStr);
@@ -104,6 +114,19 @@ void MainWindow::loadPlugins(){
     }
     if(currentPage){
         ui->stackedWidget->setCurrentWidget(pageMap[currentPage]);
+    }
+}
+
+void MainWindow::loadCustomThemes(){
+    auto styles =  StyleManager::getInstance()->getCustomStyles();
+    if(!styles.empty()){
+        for(auto style : styles){
+            QAction * styleAction = new QAction(ui->menuCnbkb);
+            styleAction->setText(style.first);
+            styleAction->setProperty("style" ,style.first );
+            ui->menuCnbkb->addAction(styleAction);
+            StyleManager::getInstance()->addStyle(objectName(), style.first, style.second);
+        }
     }
 }
 
