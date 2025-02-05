@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     StyleManager::getInstance()->addStyle(objectName(), "day", ":/style/day");
     StyleManager::getInstance()->addStyle(objectName(), "night", ":/style/night");
     loadCustomThemes();
-    // setStyleSheet(StyleManager::getInstance()->getStyle(objectName(), "day"));
+    setStyleSheet(StyleManager::getInstance()->getStyle(objectName(), "day"));
 }
 
 MainWindow::~MainWindow(){

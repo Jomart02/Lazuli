@@ -2,7 +2,7 @@
 
 SendWidget::SendWidget(QWidget *parent) : QWidget(parent) , ui(new Ui::SendWidget){
     ui->setupUi(this);
-    
+    ui->textEdit->document()->setMaximumBlockCount(100);
     
     connect(ui->pushButtonOnOff,&QPushButton::clicked,this,&SendWidget::startSend);
     connect(ui->pushButtonBind,&QPushButton::clicked,this,&SendWidget::bind);
