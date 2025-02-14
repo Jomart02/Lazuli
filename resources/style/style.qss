@@ -45,11 +45,16 @@ QGroupBox {
     border-radius: 8px;
     margin-top: 0%;
 }
+
 QGroupBox[title*=""] {
-    background-color:#EDEFF4;
     border-radius: 8px;
     margin-top: 20%;
 }
+QGroupBox > QGroupBox {
+    background-color: rgba(0, 0, 0, 0.1); /* Темнее цвет для вложенных групп */
+    margin-top: 0; /* Убираем отступ для вложенных групп */
+}
+
 
 QGroupBox::title{
     subcontrol-origin: margin;
