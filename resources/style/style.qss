@@ -56,6 +56,7 @@ QGroupBox::title{
 /* ======================================== */
 QRadioButton{
     background-color: transparent;
+    color: black;
 }
 
 QRadioButton::indicator {
@@ -264,11 +265,12 @@ QTreeView{
     font-weight: bold; 
     background-color: #EDEFF4;
     /* border: 1px solid black; */
+    color: black;
+    
 }
 
 QTreeView::branch {
     background: palette(base);
-    selection-color: white;
     font-weight: normal; 
 }
 QTreeView::item  {
@@ -278,6 +280,7 @@ QTreeView::item  {
     max-width: 300%;        /* Максимальная ширина item */
     max-height: 30%;        /* Максимальная высота item */
     font-weight: normal; 
+    color: black;
 }
 QTreeView::item:selected {
    
@@ -285,6 +288,7 @@ QTreeView::item:selected {
     border: 2px solid #0079C1; /* установка черного цвета границы для выбранного элемента */
     background-color: #0079C1; /* установка прозрачного фона для выбранного элемента */
     border-radius: 5px;
+    color: white;
     padding-left: 5%;
 }
 
