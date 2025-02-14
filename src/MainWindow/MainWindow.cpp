@@ -35,6 +35,9 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
         }
         
     });
+    connect(ui->Exit, &QAction::toggled, [=](){
+       this->close();
+    });
 
     QShortcut* fullscreenHK = new QShortcut(QKeySequence(Qt::Key_F11), this);
     connect(fullscreenHK, & QShortcut::activated, this, [=](){

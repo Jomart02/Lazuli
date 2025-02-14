@@ -73,6 +73,7 @@
    </attribute>
    <addaction name="ShowPages"/>
    <addaction name="sendOptions"/>
+   <addaction name="Exit"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -80,7 +81,7 @@
      <x>0</x>
      <y>0</y>
      <width>913</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCnbkb">
@@ -140,6 +141,17 @@
    </property>
    <property name="style" stdset="0">
     <string>night</string>
+   </property>
+  </action>
+  <action name="Exit">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Выход</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>
