@@ -33,6 +33,10 @@ QPushButton:pressed{
     background-color: #003A70;
 }
 
+QPushButton:checked{
+    min-height: 34%;
+    border: 2px solid black;
+}
 
 /* ======================================== */
 
