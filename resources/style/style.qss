@@ -302,6 +302,20 @@ QTreeView::item:selected {
 }
 
 
+
+QTableView {
+    background-color: #EDEFF4;
+    /* border: 1px solid white; */
+    border-radius: 8px;
+    selection-background-color: rgba(0, 0, 0, 0.1);
+    selection-color: white;
+    color: black;
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;    
+}
+
+
 QTableView QTableCornerButton::section {
     bottom-style:none;
     border: 1px solid transparent;
@@ -312,7 +326,22 @@ QTableView QTableCornerButton::section {
 
 QTableView::item {
     width: 50px;
+    color: black;
 }
+
+QHeaderView {
+    background-color: #EDEFF4;
+}
+
+QHeaderView::section{
+    border-style: none;
+    border-bottom: 0px;
+    background-color: #EDEFF4;
+    margin-bottom:5px;
+    margin-top:5px;
+    color:black;
+} 
+
 
 
 /* QTabWidget::pane{
