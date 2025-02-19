@@ -1,7 +1,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Goblin One&display=swap" rel="stylesheet">
 <p align="center">
-  <img alt="icon" src="gitRes/icon.svg" width="512" height="512">
+  <img alt="icon" src="https://raw.githubusercontent.com/Jomart02/Lazuli/9f9eb075cd97fd3005f9697a0e55fc5dc5faa373/gitRes/icon.svg" width="512" height="512">
   <br><br>
   <strong>
     <span style="font-size: 64px; background: linear-gradient(90deg, #3F9DBF, #82D7F4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: Goblin One;  letter-spacing: 5px;">
@@ -13,8 +13,8 @@
 <!-- Языки -->
 <p align="center" style="font-size: 16px;">
   <strong style="font-size: 18px;">Language:</strong><br>
-  <a href="README.md" style="font-size: 16px; text-decoration: none; margin: 0 5px;">🇬🇧</a> • 
-  <a href="gitRes/README_ru.md" style="font-size: 16px; text-decoration: none; margin: 0 5px;">🇷🇺</a>
+  <a href="https://github.com/Jomart02/Lazuli/blob/master/README.md" style="font-size: 16px; text-decoration: none; margin: 0 5px;">🇬🇧</a> • 
+  <a href="https://github.com/Jomart02/Lazuli/blob/master/gitRes/README_ru.md" style="font-size: 16px; text-decoration: none; margin: 0 5px;">🇷🇺</a>
 </p>
 
 
