@@ -1,14 +1,31 @@
+<style>
+  @font-face {
+    font-family: 'GoblinOne';
+    src: url('gitRes/GoblinOne.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
 
-<link href="https://fonts.googleapis.com/css2?family=Goblin One&display=swap" rel="stylesheet">
+  .goblin-one {
+    font-family: 'GoblinOne', cursive;
+    font-size: 64px;
+    background: linear-gradient(90deg, #3F9DBF, #82D7F4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 5px;
+  }
+</style>
+
 <p align="center">
   <img alt="icon" src="https://raw.githubusercontent.com/Jomart02/Lazuli/9f9eb075cd97fd3005f9697a0e55fc5dc5faa373/gitRes/icon.svg" width="512" height="512">
   <br><br>
   <strong>
-    <span style="font-size: 64px; background: linear-gradient(90deg, #3F9DBF, #82D7F4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: Goblin One;  letter-spacing: 5px;">
+    <span class="goblin-one">
       Lazuli
     </span>
   </strong>
 </p>
+
 
 <!-- Языки -->
 <p align="center" style="font-size: 16px;">
