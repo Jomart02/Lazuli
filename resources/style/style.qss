@@ -12,6 +12,25 @@ QScrollArea > QWidget > QWidget { background: transparent; }
 QScrollArea > QWidget > QScrollBar { background: palette(base); }
 
 
+
+QTabWidget::pane { /* The tab widget frame */
+    border: 5px solid #EDEFF4;
+    border-radius: 8px;
+}
+QTabBar::tab {
+    background-color: #EDEFF4;
+    color: #212B36;
+    border: 1px solid #EDEFF4;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 6px 12px;
+    border-bottom: none;
+}
+QTabWidget::tab-bar {
+    alignment: center;
+}
+
+
 /* ==================== BUTTONS ==================== */
 
 
@@ -360,22 +379,14 @@ QTabBar::tab {
 } */
 
 
-QTabBar::tab {
-    background-color: #EFF4F9;
-    color: #212B36;
-    border: 1px solid #D0DAE6;
-    padding: 6px 12px;
-    border-bottom: none;
-}
-
-QTabBar::tab:selected {
+/* QTabBar::tab:selected {
     background-color: #FFFFFF;
-    border-bottom: 2px solid #0079C1; /* Активная вкладка */
+    border-bottom: 2px solid #0079C1;
 }
 
 QTabBar::tab:hover {
-    background-color: #F8FAFC; /* При наведении */
-}
+    background-color: #F8FAFC; 
+} */
 
 QToolButton {
     background-color: transparent;
