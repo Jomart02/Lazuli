@@ -29,6 +29,14 @@ QTabBar::tab {
 QTabWidget::tab-bar {
     alignment: center;
 }
+QTabBar::tab:selected {
+    border: 5px outset #0079C1;
+    background-color: transparent;
+}
+
+QTabBar::tab:hover {
+    background-color: #B3D4FC;
+}
 
 
 /* ==================== BUTTONS ==================== */
