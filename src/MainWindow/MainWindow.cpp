@@ -91,6 +91,7 @@ void MainWindow::loadPlugins(){
         if(currentPage == nullptr){
             currentPage = item;
             connect(plugin,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+            connect(mapController,&MapControl::mapClicked, plugin,&BaseNaviWidget::setPos);
         }
     }
     if(currentPage){
@@ -145,9 +146,11 @@ void MainWindow::currentPageChange(QTreeWidgetItem *current, QTreeWidgetItem *pr
                 auto itp = pageMap.find(previous);
                 if (itp != pageMap.end()) {
                     disconnect(itp->second,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+                    disconnect(mapController,&MapControl::mapClicked, itp->second,&BaseNaviWidget::setPos);
                 }
             }
             connect(widget,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+            disconnect(mapController,&MapControl::mapClicked, widget,&BaseNaviWidget::setPos);
         }
     }
     currentPage = current;
