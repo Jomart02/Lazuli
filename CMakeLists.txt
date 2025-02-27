@@ -51,3 +51,11 @@ add_executable(${PROJECT_NAME} ${SRCS} ${QRCS} ${HDRS} ${QRCS})
 
 # target_include_directories(BaseNaviWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Network Qt6::Quick Qt6::Location Qt6::Positioning BaseNaviWidgetLib QssStyleManager)
+
+# Копирование DLL BaseNaviWidget в каталог с исполняемым файлом
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "$<TARGET_FILE:BaseNaviWidgetLib>"  # Путь к DLL
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>"  # Каталог с исполняемым файлом
+    COMMENT "Copying BaseNaviWidget.dll to the executable directory"
+)
