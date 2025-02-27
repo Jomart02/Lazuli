@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->sendOptions, &QAction::toggled, this,&MainWindow::openCloseSendPanel);
     connect(ui->map, &QAction::toggled, this,&MainWindow::openCloseMap);
     connect(ui->Exit, &QAction::toggled, [=](){
-       this->close();
+       this->deleteLater();
     });
 
     QShortcut* fullscreenHK = new QShortcut(QKeySequence(Qt::Key_F11), this);
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
 }
 
 MainWindow::~MainWindow(){
-    
+
 }
 
 void MainWindow::loadPlugins(){

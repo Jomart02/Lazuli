@@ -7,11 +7,7 @@ MapControl::MapControl(QObject *parent)
     : QObject(parent), rootObject(nullptr) {}
 
 MapControl::~MapControl() {
-    if (rootObject) {
-          QObject::disconnect(rootObject, SIGNAL(mapClickedSignal(double, double)),
-     this, SLOT(handleMapClick(double, double)));
-        delete rootObject;
-    }
+    closeMap();
 }
 
 void MapControl::showMap() {
