@@ -5,7 +5,7 @@
 #include "PluginLoader.h"
 #include "udp_sender.h"
 #include "StyleManager.h"
-
+#include "MapControl.h"
 namespace Ui
 {
     class MainWindow;
@@ -22,9 +22,13 @@ class MainWindow : public QMainWindow
         void sendStateChange(bool state);
         void bindSocket(QString ip, quint16 port);
         void currentPageChange(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+        void openCloseMap(bool state);
+        void openCloseSendPanel(bool state);
+        void openCloseSensorsPanel(bool state);
+        void mapClosed();
     private:
         void loadPlugins();
-        void loadCustomThemes();
+        void loadCustomThemes(); 
     private:
 
         struct SendParam{
@@ -38,4 +42,6 @@ class MainWindow : public QMainWindow
         QTreeWidgetItem* currentPage = nullptr;
         std::map<BaseNaviWidget*,UdpSender*> senders;
         bool aaa = true;
+        MapControl *mapController;
+
 };

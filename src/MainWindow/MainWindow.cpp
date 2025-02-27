@@ -3,38 +3,16 @@
 #include <QShortcut>
 #include "global_vars.h"
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow){
+MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow),mapController(new MapControl(this)){
     ui->setupUi(this);
     loadPlugins();
     StyleManager::getInstance()->init(CUSTOM_STYLES);
 
-    connect(ui->ShowPages, &QAction::toggled, [=](bool checked){
-        ui->treeWidget->setVisible(checked);
-        QGridLayout *layout = qobject_cast<QGridLayout*>(centralWidget()->layout());
-        if (layout) {
-            if (checked) {
-                layout->setColumnStretch(0, 1); // Восстанавливаем растяжение для treeWidget
-                layout->setColumnStretch(1, 6); // Восстанавливаем растяжение для stackedWidget
-            } else {
-                layout->setColumnStretch(0, 0); // Убираем растяжение для treeWidget
-                layout->setColumnStretch(1, 7); // Увеличиваем растяжение для stackedWidget
-            }
-        }
-    });
-    connect(ui->sendOptions, &QAction::toggled, [=](bool checked){
-        ui->sendPanel->setVisible(checked);
-        QGridLayout *layout = qobject_cast<QGridLayout*>(centralWidget()->layout());
-        if (layout) {
-            if (checked) {
-                layout->setRowStretch(0, 6); // Восстанавливаем растяжение для верхней части
-                layout->setRowStretch(1, 1); // Восстанавливаем растяжение для sendPanel
-            } else {
-                layout->setRowStretch(0, 7); // Увеличиваем растяжение для верхней части
-                layout->setRowStretch(1, 0); // Убираем растяжение для sendPanel
-            }
-        }
-        
-    });
+    connect(mapController,&MapControl::mapClose,this,&MainWindow::mapClosed);
+
+    connect(ui->ShowPages, &QAction::toggled, this,&MainWindow::openCloseSensorsPanel);
+    connect(ui->sendOptions, &QAction::toggled, this,&MainWindow::openCloseSendPanel);
+    connect(ui->map, &QAction::toggled, this,&MainWindow::openCloseMap);
     connect(ui->Exit, &QAction::toggled, [=](){
        this->close();
     });
@@ -173,4 +151,42 @@ void MainWindow::currentPageChange(QTreeWidgetItem *current, QTreeWidgetItem *pr
         }
     }
     currentPage = current;
+}
+
+
+void MainWindow::openCloseMap(bool state){
+    if (state) {
+        mapController->showMap();
+    } else {
+        mapController->closeMap();
+    }
+}
+void MainWindow::openCloseSendPanel(bool state){
+    ui->sendPanel->setVisible(state);
+    QGridLayout *layout = qobject_cast<QGridLayout*>(centralWidget()->layout());
+    if (layout) {
+        if (state) {
+            layout->setRowStretch(0, 6); // Восстанавливаем растяжение для верхней части
+            layout->setRowStretch(1, 1); // Восстанавливаем растяжение для sendPanel
+        } else {
+            layout->setRowStretch(0, 7); // Увеличиваем растяжение для верхней части
+            layout->setRowStretch(1, 0); // Убираем растяжение для sendPanel
+        }
+    }
+}
+void MainWindow::openCloseSensorsPanel(bool state){
+    ui->treeWidget->setVisible(state);
+    QGridLayout *layout = qobject_cast<QGridLayout*>(centralWidget()->layout());
+    if (layout) {
+        if (state) {
+            layout->setColumnStretch(0, 1); // Восстанавливаем растяжение для treeWidget
+            layout->setColumnStretch(1, 6); // Восстанавливаем растяжение для stackedWidget
+        } else {
+            layout->setColumnStretch(0, 0); // Убираем растяжение для treeWidget
+            layout->setColumnStretch(1, 7); // Увеличиваем растяжение для stackedWidget
+        }
+    }
+}
+void MainWindow::mapClosed(){
+    ui->map->setChecked(false);
 }

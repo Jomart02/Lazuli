@@ -73,6 +73,7 @@
    </attribute>
    <addaction name="ShowPages"/>
    <addaction name="sendOptions"/>
+   <addaction name="map"/>
    <addaction name="Exit"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -149,6 +150,20 @@
    </property>
    <property name="text">
     <string>Выход</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="map">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Карта</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
