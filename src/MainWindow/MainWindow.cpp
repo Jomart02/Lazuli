@@ -150,7 +150,7 @@ void MainWindow::currentPageChange(QTreeWidgetItem *current, QTreeWidgetItem *pr
                 }
             }
             connect(widget,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
-            disconnect(mapController,&MapControl::mapClicked, widget,&BaseNaviWidget::setPos);
+            connect(mapController,&MapControl::mapClicked, widget,&BaseNaviWidget::setPos);
         }
     }
     currentPage = current;
