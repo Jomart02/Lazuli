@@ -39,16 +39,50 @@ Lazuli incorporates a robust plugin system, empowering users to expand its capab
 It is necessary to override one method to implement the generation of NMEA
 messages
 
+The program creates a Plugins folder (Lazuli/Plugins) in the user's home directory
+Plugins (inheritors of the base class) must be placed in this directory
+
 ### Customizable Simulations:
 Users can configure simulation profiles to replicate real-world conditions, such as vessel movement, weather data, sensor readings, and more. This customization capability allows developers and testers to validate their systems under diverse and controlled environments.
 
+![page](./gitRes/lazuli.png)
+
 ### Styling Customization with QSS:
 Lazuli supports Qt Style Sheets (QSS) and [StyleManager](https://github.com/Jomart02/QssStyleManager/tree/5899cc2385e98501828e1226899dd6fa04698501), enabling users to fully customize the application's visual appearance use custom settings. 
+
+The program creates a Styles folder (Lazuli/Styles) in the user's home directory
+You can place json settings for the style in this directory (they must match the Lazuli style format)
+
+### Map coordinates
+The program allows you to take coordinates from the map
+
+When you click on the map, the latitude and longitude are passed to the virtual method of the base class
+
+![map](./gitRes/map.gif)
+---
 
 Developed using C++ and Qt 6.5.3's QtWidgets module, Lazuli ensures high performance and cross-platform compatibility.
 
 ## Installation 
 
-## Links
+Clone this repo and update submodules
 
+```shell
+git submodule update --init --recursive
+```
+```shell
+mkdir build
+cd build && cmake ..
+cmake --build . -j 8 --config Release 
+```
+
+## Links
+- [Plugins](https://github.com/Jomart02/NavySimulators)
+- [StyleManager](https://github.com/Jomart02/QssStyleManager/tree/5899cc2385e98501828e1226899dd6fa04698501)
+- [The base plugin class](https://github.com/Jomart02/BaseNaviWidget/tree/11d4991ce9b7591ce461af3f34f1f4f94c38ff8c)
+- [using NMEA message](https://gpsd.gitlab.io/gpsd/NMEA.html)
+- [AIS](https://gpsd.gitlab.io/gpsd/AIVDM.html)
 ## Сontributors
+
+- с++, python middle developer [pandazz77](https://github.com/pandazz77)
+- c++, mobile app developer , designer [Tatarin](https://github.com/Tatarin61866) 
