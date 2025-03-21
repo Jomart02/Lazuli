@@ -28,6 +28,8 @@ class MainWindow : public QMainWindow
         void openCloseSensorsPanel(bool state);
         void mapClosed();
         void onLanguageChanged();
+    signals:
+        void retranslate(QString retrPref);
     private:
         void loadPlugins();
         void loadCustomThemes(); 

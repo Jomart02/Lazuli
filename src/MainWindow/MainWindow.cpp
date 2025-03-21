@@ -86,9 +86,10 @@ void MainWindow::changeLanguage(const QString &language) {
     } else {
         qDebug() << "Failed to load translation file for" << language;
     }
+    emit retranslate(language);
 
-    QEvent languageChangeEvent(QEvent::LanguageChange);
-    QApplication::sendEvent(this, &languageChangeEvent);
+    // QEvent languageChangeEvent(QEvent::LanguageChange);
+    // QApplication::sendEvent(this, &languageChangeEvent);
 }
 
 
@@ -131,7 +132,7 @@ void MainWindow::loadPlugins(){
         UdpSender *sender = new UdpSender("127.0.0.1",20000,this);
         senders[plugin] = sender;
         connect(plugin,&BaseNaviWidget::sendData, sender,QOverload<QStringList>::of(&UdpSender::setData));
-        
+        connect(this,&MainWindow::retranslate,plugin,&BaseNaviWidget::setRetranslate);
         ui->sendPanel->setSendParam(false, "127.0.0.1",20000);
         
         SendParam data = {"127.0.0.1",20000,false};
