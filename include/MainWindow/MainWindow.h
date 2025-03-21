@@ -50,4 +50,5 @@ class MainWindow : public QMainWindow
         bool aaa = true;
         MapControl *mapController;
         QTranslator *translator;
+        QString currentLang;
 };

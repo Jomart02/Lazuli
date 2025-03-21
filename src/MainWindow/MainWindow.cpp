@@ -2,6 +2,7 @@
 #include <QMessageBox>
 #include <QShortcut>
 #include "global_vars.h"
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow),mapController(new MapControl(this)),
 translator(new QTranslator(this)){
@@ -10,7 +11,7 @@ translator(new QTranslator(this)){
     loadTranslate();
     Q_INIT_RESOURCE(translations);
     StyleManager::getInstance()->init(CUSTOM_STYLES);
-
+    
     connect(mapController,&MapControl::mapClose,this,&MainWindow::mapClosed);
 
     connect(ui->ShowPages, &QAction::toggled, this,&MainWindow::openCloseSensorsPanel);
@@ -52,7 +53,8 @@ translator(new QTranslator(this)){
 }
 
 MainWindow::~MainWindow(){
-
+    QSettings sett(CONFIG, QSettings::IniFormat);
+    sett.setValue("lang", currentLang);
 }
 
 void MainWindow::loadTranslate(){
@@ -67,6 +69,13 @@ void MainWindow::loadTranslate(){
 
     connect(englishAction, &QAction::triggered, this, &MainWindow::onLanguageChanged);
     connect(russianAction, &QAction::triggered, this, &MainWindow::onLanguageChanged);
+
+    QSettings sett(CONFIG, QSettings::IniFormat);
+   
+    currentLang = sett.value("lang").toString();
+    if(!currentLang.isEmpty()){
+        changeLanguage(currentLang);
+    }
 }
 
 void MainWindow::changeLanguage(const QString &language) {
@@ -74,7 +83,7 @@ void MainWindow::changeLanguage(const QString &language) {
     if (qApp->removeTranslator(translator)) {
         qDebug() << "Removed previous translator";
     }
-
+    currentLang = language;
     // Загружаем новый перевод
     if (translator->load(":/translations/" + language)) {
         if (qApp->installTranslator(translator)) {
