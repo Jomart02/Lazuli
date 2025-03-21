@@ -35,6 +35,16 @@ set(SRCS
 set(QRCS
     ./resources/Style.qrc
     ./resources/map.qrc
+    ./translations/translations.qrc
+)
+
+set(TS_FILES
+    translations/Lazuli_en.ts
+    translations/Lazuli_ru.ts
+)
+set(QM_FILES
+    translations/Lazuli_en.qm
+    translations/Lazuli_ru.qm
 )
 
 add_subdirectory(./BaseNaviWidget)
@@ -46,6 +56,30 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
 )
 
 find_package(Qt6 COMPONENTS Widgets Network  Quick Location Positioning REQUIRED)
+
+# Поиск lupdate и lrelease
+find_program(LUPDATE_EXECUTABLE lupdate)
+find_program(LRELEASE_EXECUTABLE lrelease)
+if(NOT LUPDATE_EXECUTABLE OR NOT LRELEASE_EXECUTABLE)
+    message(FATAL_ERROR "lupdate or lrelease not found")
+endif()
+
+# Обновление .ts файлов
+add_custom_target(update_ts
+    COMMAND ${LUPDATE_EXECUTABLE} ${SRCS} ${HDRS} ui/MainWindow/
+    ui/SendWidget/ -ts ${TS_FILES}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Updating translation files"
+)
+# Компиляция .ts в .qm
+add_custom_command(
+    OUTPUT ${QM_FILES}
+    COMMAND ${LRELEASE_EXECUTABLE} ${TS_FILES}
+    DEPENDS ${TS_FILES}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Compiling translation files to .qm"
+)
+add_custom_target(translations ALL DEPENDS ${QM_FILES})
 
 add_executable(${PROJECT_NAME} ${SRCS} ${QRCS} ${HDRS} ${QRCS})
 

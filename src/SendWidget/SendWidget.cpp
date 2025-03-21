@@ -40,3 +40,10 @@ void SendWidget::bind(){
     quint16 port = ui->lineEdit_Port->text().toInt();
     emit bindParam(ip, port);
 }
+
+void SendWidget::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
+}

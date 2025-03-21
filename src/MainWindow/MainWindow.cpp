@@ -3,9 +3,12 @@
 #include <QShortcut>
 #include "global_vars.h"
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow),mapController(new MapControl(this)){
+MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow),mapController(new MapControl(this)),
+translator(new QTranslator(this)){
     ui->setupUi(this);
     loadPlugins();
+    loadTranslate();
+    Q_INIT_RESOURCE(translations);
     StyleManager::getInstance()->init(CUSTOM_STYLES);
 
     connect(mapController,&MapControl::mapClose,this,&MainWindow::mapClosed);
@@ -51,6 +54,52 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
 MainWindow::~MainWindow(){
 
 }
+
+void MainWindow::loadTranslate(){
+    // Создание меню для выбора языка
+    QAction *englishAction = new QAction(QCoreApplication::translate("MainWindow", "en"), this);
+    englishAction->setData("en");
+    QAction *russianAction = new QAction(QCoreApplication::translate("MainWindow", "ru"), this);
+    russianAction->setData("ru");
+
+    ui->languageMenu->addAction(englishAction);
+    ui->languageMenu->addAction(russianAction);
+
+    connect(englishAction, &QAction::triggered, this, &MainWindow::onLanguageChanged);
+    connect(russianAction, &QAction::triggered, this, &MainWindow::onLanguageChanged);
+}
+
+void MainWindow::changeLanguage(const QString &language) {
+    // Удаляем текущий перевод
+    if (qApp->removeTranslator(translator)) {
+        qDebug() << "Removed previous translator";
+    }
+
+    // Загружаем новый перевод
+    if (translator->load(":/translations/" + language)) {
+        if (qApp->installTranslator(translator)) {
+            qDebug() << "Installed translator for" << language;
+            ui->retranslateUi(this);
+        } else {
+            qDebug() << "Failed to install translator for" << language;
+        }
+    } else {
+        qDebug() << "Failed to load translation file for" << language;
+    }
+
+    QEvent languageChangeEvent(QEvent::LanguageChange);
+    QApplication::sendEvent(this, &languageChangeEvent);
+}
+
+
+void MainWindow::onLanguageChanged() {
+    QAction *action = qobject_cast<QAction*>(sender());
+    if (action) {
+        QString language = action->data().toString();
+        changeLanguage(language);
+    }
+}
+
 
 void MainWindow::loadPlugins(){
     PluginLoader pluginLoader;

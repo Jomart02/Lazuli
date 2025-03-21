@@ -20,6 +20,8 @@ signals:
 public slots:
     void setData(QStringList data);
     void bind();
+protected:
+    void changeEvent(QEvent *event) override;
 private:
     Ui::SendWidget *ui;
 };

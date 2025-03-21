@@ -6,6 +6,7 @@
 #include "udp_sender.h"
 #include "StyleManager.h"
 #include "MapControl.h"
+#include <QTranslator>
 namespace Ui
 {
     class MainWindow;
@@ -26,9 +27,12 @@ class MainWindow : public QMainWindow
         void openCloseSendPanel(bool state);
         void openCloseSensorsPanel(bool state);
         void mapClosed();
+        void onLanguageChanged();
     private:
         void loadPlugins();
         void loadCustomThemes(); 
+        void loadTranslate();
+        void changeLanguage(const QString &language);
     private:
 
         struct SendParam{
@@ -43,5 +47,5 @@ class MainWindow : public QMainWindow
         std::map<BaseNaviWidget*,UdpSender*> senders;
         bool aaa = true;
         MapControl *mapController;
-
+        QTranslator *translator;
 };
