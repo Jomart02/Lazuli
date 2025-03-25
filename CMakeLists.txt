@@ -13,6 +13,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/MainWindow/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/UdpSender/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/SendWidget/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/MapControl/)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/TopPanel/)
 
 set(HDRS
     ./include/PluginLoader/PluginLoader.h
@@ -21,6 +22,7 @@ set(HDRS
     ./include/SendWidget/SendWidget.h
     ./include/global_vars.h
     ./include/MapControl/MapControl.h
+    ./include/TopPanel/TopPanel.h
 )
 
 set(SRCS
@@ -30,6 +32,7 @@ set(SRCS
     ./src/UdpSender/udp_sender.cpp
     ./src/SendWidget/SendWidget.cpp
     ./src/MapControl/MapControl.cpp
+    ./src/TopPanel/TopPanel.cpp
 )
 
 set(QRCS
@@ -53,6 +56,7 @@ add_subdirectory(./QssStyleManager)
 set(CMAKE_AUTOUIC_SEARCH_PATHS 
     ui/MainWindow/
     ui/SendWidget/
+    ui/TopPanel/
 )
 
 find_package(Qt6 COMPONENTS Widgets Network  Quick Location Positioning REQUIRED)
@@ -67,7 +71,7 @@ endif()
 # Обновление .ts файлов
 add_custom_target(update_ts
     COMMAND ${LUPDATE_EXECUTABLE} ${SRCS} ${HDRS} ui/MainWindow/
-    ui/SendWidget/ -ts ${TS_FILES}
+    ui/SendWidget/ ui/TopPanel/ -ts ${TS_FILES}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMENT "Updating translation files"
 )

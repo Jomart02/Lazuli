@@ -7,6 +7,7 @@
 #include "StyleManager.h"
 #include "MapControl.h"
 #include <QTranslator>
+#include "TopPanel.h"
 namespace Ui
 {
     class MainWindow;
@@ -31,6 +32,7 @@ class MainWindow : public QMainWindow
     signals:
         void retranslate(QString retrPref);
     private:
+        void setupUI();
         void loadPlugins();
         void loadCustomThemes(); 
         void loadTranslate();
@@ -51,4 +53,5 @@ class MainWindow : public QMainWindow
         MapControl *mapController;
         QTranslator *translator;
         QString currentLang;
+        TopPanel *topPanel;
 };
