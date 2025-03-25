@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/icons">
         <file alias="less">Icons/expand_less.svg</file>
-        <file alias="more">Icons/expand_more.svg</file>
+        <file alias="more_white">Icons/expand_more.svg</file>
         <file alias="more_black">Icons/expand_more_black.svg</file>
         <file alias="slider">Icons/Slider.svg</file>
         <file alias="arrow_left">Icons/arrow_left.svg</file>

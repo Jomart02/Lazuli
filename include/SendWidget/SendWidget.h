@@ -2,7 +2,6 @@
 
 
 #include <QWidget>
-#include "ui_SendWidget.h"
 #include <QRegularExpression>
 #include <QValidator>
 

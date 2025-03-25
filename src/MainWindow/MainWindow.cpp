@@ -5,8 +5,9 @@
 #include <QSettings>
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow),mapController(new MapControl(this)),
-translator(new QTranslator(this)){
+translator(new QTranslator(this)),topPanel(new TopPanel(this)){
     ui->setupUi(this);
+    setupUI();
     loadPlugins();
     loadTranslate();
     Q_INIT_RESOURCE(translations);
@@ -14,12 +15,6 @@ translator(new QTranslator(this)){
     
     connect(mapController,&MapControl::mapClose,this,&MainWindow::mapClosed);
 
-    connect(ui->ShowPages, &QAction::toggled, this,&MainWindow::openCloseSensorsPanel);
-    connect(ui->sendOptions, &QAction::toggled, this,&MainWindow::openCloseSendPanel);
-    connect(ui->map, &QAction::toggled, this,&MainWindow::openCloseMap);
-    connect(ui->Exit, &QAction::toggled, [=](){
-       this->deleteLater();
-    });
 
     QShortcut* fullscreenHK = new QShortcut(QKeySequence(Qt::Key_F11), this);
     connect(fullscreenHK, & QShortcut::activated, this, [=](){
@@ -50,6 +45,18 @@ translator(new QTranslator(this)){
     StyleManager::getInstance()->addStyle(objectName(), "night", ":/style/night");
     if(StyleManager::getInstance()->isCustomStyles(CUSTOM_STYLES)) loadCustomThemes();
     setStyleSheet(StyleManager::getInstance()->getStyle(objectName(), "day"));
+}
+
+void MainWindow::setupUI(){
+
+    ui->toolBar->addWidget(topPanel);
+
+    connect(topPanel, &TopPanel::showPagesTriggered, this,&MainWindow::openCloseSensorsPanel);
+    connect(topPanel, &TopPanel::showSettingsTriggered, this,&MainWindow::openCloseSendPanel);
+    connect(topPanel, &TopPanel::showMapTriggered, this,&MainWindow::openCloseMap);
+    connect(topPanel, &TopPanel::exitTriggered, [=](){
+       this->deleteLater();
+    });
 }
 
 MainWindow::~MainWindow(){
@@ -250,5 +257,5 @@ void MainWindow::openCloseSensorsPanel(bool state){
     }
 }
 void MainWindow::mapClosed(){
-    ui->map->setChecked(false);
+    topPanel->uncheckMap();
 }

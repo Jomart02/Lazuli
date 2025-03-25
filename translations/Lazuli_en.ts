@@ -4,7 +4,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="100"/>
+        <location filename="../ui/MainWindow/MainWindow.ui" line="96"/>
         <source>Язык</source>
         <translation>Language</translation>
     </message>
@@ -17,17 +17,17 @@
         <translation type="vanished">Russian</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="60"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="69"/>
         <source>en</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="62"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="71"/>
         <source>ru</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="113"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="130"/>
         <source>Ошибка загрузки</source>
         <translation>Loading error</translation>
     </message>
@@ -42,49 +42,45 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="93"/>
+        <location filename="../ui/MainWindow/MainWindow.ui" line="89"/>
         <source>Стили</source>
         <translation>Pallete</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="114"/>
         <source>Показать страницы</source>
-        <translation>Show pages</translation>
+        <translation type="vanished">Show pages</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="128"/>
         <source>Настройки отправки</source>
-        <translation>Send settings</translation>
+        <translation type="vanished">Send settings</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="139"/>
+        <location filename="../ui/MainWindow/MainWindow.ui" line="107"/>
         <source>Day</source>
         <translation>Day</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="142"/>
+        <location filename="../ui/MainWindow/MainWindow.ui" line="110"/>
         <source>day</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="150"/>
+        <location filename="../ui/MainWindow/MainWindow.ui" line="118"/>
         <source>Night</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="153"/>
+        <location filename="../ui/MainWindow/MainWindow.ui" line="121"/>
         <source>night</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="161"/>
         <source>Выход</source>
-        <translation>Exit</translation>
+        <translation type="vanished">Exit</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow/MainWindow.ui" line="175"/>
         <source>Карта</source>
-        <translation>Map</translation>
+        <translation type="vanished">Map</translation>
     </message>
 </context>
 <context>
@@ -123,6 +119,34 @@
         <location filename="../ui/SendWidget/SendWidget.ui" line="72"/>
         <source>Начать отправку</source>
         <translation>Start send</translation>
+    </message>
+</context>
+<context>
+    <name>TopPanel</name>
+    <message>
+        <location filename="../ui/TopPanel/TopPanel.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/TopPanel/TopPanel.ui" line="38"/>
+        <source>Показать страницы</source>
+        <translation>Show pages</translation>
+    </message>
+    <message>
+        <location filename="../ui/TopPanel/TopPanel.ui" line="51"/>
+        <source>Настройки отправки</source>
+        <translation>Send settings</translation>
+    </message>
+    <message>
+        <location filename="../ui/TopPanel/TopPanel.ui" line="64"/>
+        <source>Карта</source>
+        <translation>Map</translation>
+    </message>
+    <message>
+        <location filename="../ui/TopPanel/TopPanel.ui" line="74"/>
+        <source>Выход</source>
+        <translation>Exit</translation>
     </message>
 </context>
 </TS>

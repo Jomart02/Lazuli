@@ -1,4 +1,6 @@
 #include "SendWidget.h"
+#include "ui_SendWidget.h"
+
 
 SendWidget::SendWidget(QWidget *parent) : QWidget(parent) , ui(new Ui::SendWidget){
     ui->setupUi(this);
