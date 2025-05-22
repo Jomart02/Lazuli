@@ -1,5 +1,6 @@
 #include "PluginLoader.h"
 
+#include "NaviPluginInterface.h"
 
 PluginLoader::PluginLoader(QObject *parent) : QObject(parent) {}
 
@@ -35,11 +36,13 @@ QVector<BaseNaviWidget*> PluginLoader::loadPlugins(ErrorsLoad &errors,const QStr
     for (const QString &fileName : pluginsDir.entryList(QDir::Files)) {
         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
         QObject *plugin = pluginLoader.instance();
-
-        if (plugin) {
-            BaseNaviWidget *naviWidget = qobject_cast<BaseNaviWidget*>(plugin);
-            if (naviWidget) {
+        if(plugin) {
+            if(BaseNaviWidget *naviWidget = qobject_cast<BaseNaviWidget*>(plugin)){
                 plugins.append(naviWidget);
+            } else if(NaviPluginInterface *naviIface = qobject_cast<NaviPluginInterface*>(plugin)){
+                BaseNaviWidget *naviWidget = naviIface->getWidget();
+                if(naviWidget) plugins.append(naviWidget);
+                else qWarning() << "iface doesnt contains widget";
             } else {
                 const char* errorCodeStr = metaEnum.valueToKey(static_cast<int>(ErrorCodePlugins::PLUGIN_IS_NOT_A_BASENAVIWIDGET));
                 qWarning() << errorCodeStr << fileName;
