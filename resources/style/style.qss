@@ -306,9 +306,9 @@ QTableView {
     background-color: {groupBoxBackgroundColor};
     /* border: 1px solid white; */
     border-radius: 8px;
-    selection-background-color: rgba(0, 0, 0, 0.1);
-    selection-color: white;
-    color: black;
+    selection-background-color:  {hoverBackgroundColor};
+    selection-color: {hoverTextColor};
+    color: {textColor};
     margin-top: 5px;
     padding-left: 10px;
     padding-right: 10px;    
