@@ -10,7 +10,7 @@ set(CMAKE_AUTOUIC ON)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/PluginLoader/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/MainWindow/)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/UdpSender/)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/Senders/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/SendWidget/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/MapControl/)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/TopPanel/)
@@ -18,7 +18,9 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/TopPanel/)
 set(HDRS
     ./include/PluginLoader/PluginLoader.h
     ./include/MainWindow/MainWindow.h
-    ./include/UdpSender/udp_sender.h
+    ./include/Senders/BaseSender.h
+    ./include/Senders/udp_sender.h
+    ./include/Senders/SerialSender.h
     ./include/SendWidget/SendWidget.h
     ./include/global_vars.h
     ./include/MapControl/MapControl.h
@@ -29,7 +31,8 @@ set(SRCS
     ./src/main.cpp
     ./src/PluginLoader/PluginLoader.cpp
     ./src/MainWindow/MainWindow.cpp
-    ./src/UdpSender/udp_sender.cpp
+    ./src/Senders/udp_sender.cpp
+    ./src/Senders/SerialSender.cpp
     ./src/SendWidget/SendWidget.cpp
     ./src/MapControl/MapControl.cpp
     ./src/TopPanel/TopPanel.cpp
@@ -59,7 +62,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     ui/TopPanel/
 )
 
-find_package(Qt6 COMPONENTS Widgets Network  Quick Location Positioning REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Network  Quick Location Positioning SerialPort REQUIRED)
 
 # Поиск lupdate и lrelease
 find_program(LUPDATE_EXECUTABLE lupdate)
@@ -88,7 +91,7 @@ add_custom_target(translations ALL DEPENDS ${QM_FILES})
 add_executable(${PROJECT_NAME} ${SRCS} ${QRCS} ${HDRS} ${QRCS})
 
 # target_include_directories(BaseNaviWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Network Qt6::Quick Qt6::Location Qt6::Positioning BaseNaviWidgetLib QssStyleManager)
+target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Network Qt6::Quick Qt6::Location Qt6::Positioning Qt6::SerialPort BaseNaviWidgetLib QssStyleManager)
 
 # Копирование DLL BaseNaviWidget в каталог с исполняемым файлом
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

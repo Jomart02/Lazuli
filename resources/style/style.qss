@@ -1,9 +1,14 @@
-
 QWidget{
     font-family: 'Helvetica';
     font-style: normal;
     font-weight: bold; /*700 as default*/
     background-color: {baseBackgroundColor};
+}
+
+
+QStackedWidget > QWidget{
+    background-color: {groupBoxBackgroundColor};
+    border:none;
 }
 
 

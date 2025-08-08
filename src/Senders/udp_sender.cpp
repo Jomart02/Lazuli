@@ -1,12 +1,12 @@
 #include "udp_sender.h"
 
-UdpSender::UdpSender(QObject * parent ):QObject(parent){
+UdpSender::UdpSender(QObject * parent ):Sender(parent){
 
 }
 
 
-UdpSender::UdpSender(const QString &address, quint16 port, QObject * parent)
-  : QObject(parent), ha(address), p(port) { }
+UdpSender::UdpSender(EthernetParams paramEther, QObject * parent)
+  : Sender(parent), ha(paramEther.ip), p(paramEther.port) { }
 
 void UdpSender::setAddress(QString &a){
     this->ha.setAddress(a);
@@ -16,9 +16,12 @@ void UdpSender::setPort(quint16 p){
     this->p = p;
 }
 
-void UdpSender::setTarget(QString &a, quint16 p){
-    setAddress(a);
-    setPort(p);
+void UdpSender::setTarget(QVariant target){
+    if(target.canConvert<EthernetParams>()){
+        EthernetParams params = target.value<EthernetParams>();
+        setAddress(params.ip);
+        setPort(params.port);
+    }
 }
 
 void UdpSender::sendData(const char *buf){
@@ -29,6 +32,7 @@ void UdpSender::setData(QStringList data){
         for(auto mes:data){
             sendBuf(mes.toUtf8().data());
         }
+        emit dataSent(data);
     }
 }
 

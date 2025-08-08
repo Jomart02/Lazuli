@@ -1,23 +1,15 @@
 #pragma once
-
-#include <QObject>
-#include <QString>
 #include <QHostAddress>
 #include <QUdpSocket>
+#include "BaseSender.h"
 
 // Sends UDP packets
-class UdpSender : public QObject
+class UdpSender : public Sender
 {
     Q_OBJECT
 public:
-    // address - target IP address, brooadcasts supported
-    // port - destination port
-    // parent - qt parent
-
     UdpSender(QObject * parent = 0);
-
-    UdpSender(const QString &address, quint16 port,
-        QObject * parent = 0);
+    UdpSender(EthernetParams paramEther,QObject * parent = 0);
 
     /// @brief Send <buf>
     /// @param buf char arr to send
@@ -25,9 +17,9 @@ public:
 
     void setAddress(QString &address);
     void setPort(quint16 port);
-    void setTarget(QString &address, quint16 port);
+    virtual void setTarget(QVariant target) override;
 public slots:
-    void setData(QStringList data);
+    virtual void setData(QStringList data) override;
 private:
 
     void sendBuf(const char *buf);
