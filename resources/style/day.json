@@ -25,5 +25,10 @@
     "CheckBoxUnChecked": ":/icons/unchecked_day",
     "radioYes": ":/icons/radioYes_day",
     "radioNo": ":/icons/radioNo_day",
-    "comboboxIcon": ":/icons/more_black"
+    "comboboxIcon": ":/icons/more_black",
+    "speedBackground": "black",
+    "speedtextNameColor": "white",
+    "speedtextValueColor": "white",
+    "speedtextUintsColor": "white",
+    "speedmarksColor": "white"
 }

@@ -395,3 +395,11 @@ QMenu::item:selected {
 ToolItem QLabel{
     background-image: url({comboboxIcon});
 } */
+
+SpeedometerWidget{
+    qproperty-background: {speedBackground};
+    qproperty-textNameColor: {speedtextNameColor};
+    qproperty-textValueColor: {speedtextValueColor};
+    qproperty-textUintsColor: {speedtextUintsColor};
+    qproperty-marksColor: {speedmarksColor};
+}
