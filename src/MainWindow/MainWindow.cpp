@@ -3,6 +3,10 @@
 #include <QShortcut>
 #include "global_vars.h"
 #include <QSettings>
+#include "StyleManager.h"
+#include "PluginLoader.h"
+#include "udp_sender.h"
+#include "SerialSender.h"
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow),mapController(new MapControl(this)),
 translator(new QTranslator(this)),topPanel(new TopPanel(this)){
@@ -145,18 +149,27 @@ void MainWindow::loadPlugins(){
 
         pageMap[item] = plugin;
         
-        UdpSender *sender = new UdpSender("127.0.0.1",20000,this);
-        senders[plugin] = sender;
-        connect(plugin,&BaseNaviWidget::sendData, sender,QOverload<QStringList>::of(&UdpSender::setData));
-        connect(this,&MainWindow::retranslate,plugin,&BaseNaviWidget::setRetranslate);
-        ui->sendPanel->setSendParam(false, "127.0.0.1",20000);
+        SendParam data;
+        data.curSendType = TypeSendInterface::ETHERNET;
+        data.active = false;
+        data.etherParam = {"127.0.0.1", 20000};
+        data.comParam = {"", QSerialPort::Baud9600, QSerialPort::Data8, QSerialPort::NoParity, 
+                        QSerialPort::OneStop, QSerialPort::NoFlowControl};
         
-        SendParam data = {"127.0.0.1",20000,false};
+        Sender *sender = new UdpSender(data.etherParam,this);
+        senders[plugin] = sender;
+        connect(plugin,&BaseNaviWidget::sendData, sender,QOverload<QStringList >::of(&Sender::setData));
+        connect(this,&MainWindow::retranslate,plugin,&BaseNaviWidget::setRetranslate);
+        
+        
         item->setData(0, Qt::UserRole,QVariant::fromValue(data));
+        
+
+        ui->sendPanel->setSendParam(data);
 
         if(currentPage == nullptr){
             currentPage = item;
-            connect(plugin,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+            connect(sender,&Sender::dataSent, ui->sendPanel,&SendWidget::setData);
             connect(mapController,&MapControl::mapClicked, plugin,&BaseNaviWidget::setPos);
         }
     }
@@ -188,14 +201,49 @@ void MainWindow::sendStateChange(bool state){
     currentPage->setData(0, Qt::UserRole,QVariant::fromValue(param));
 }
 
-void MainWindow::bindSocket(QString ip, quint16 port){
+void MainWindow::bindSocket(TypeSendInterface typeBind , QVariant _bindParam){
     if(currentPage == nullptr) return;
     BaseNaviWidget* widg = pageMap[currentPage];
-    senders[widg]->setTarget(ip, port);
-    
+
+    if (!widg || senders.find(widg) == senders.end()) {
+        qWarning() << "Invalid widget or sender not found";
+        return;
+    }
     SendParam param = currentPage->data(0, Qt::UserRole).value<SendParam>();
-    param.ip = ip;
-    param.port = port;
+    bool recreateSender = (param.curSendType != typeBind);
+    param.curSendType = typeBind;
+
+    Sender* sender = senders[widg];
+
+    if(typeBind == TypeSendInterface::ETHERNET){
+        param.etherParam = _bindParam.value<EthernetParams>();
+
+        if (recreateSender) {
+            delete sender;
+            senders.erase(widg);
+            sender = new UdpSender(param.etherParam, this);
+            senders[widg] = sender;
+            connect(widg, &BaseNaviWidget::sendData, sender, &Sender::setData);
+            connect(sender,&Sender::dataSent, ui->sendPanel,&SendWidget::setData);
+        } else {
+            sender->setTarget(QVariant::fromValue(param.etherParam));
+        }
+    
+    }else{
+        param.comParam = _bindParam.value<ComPortParams>();
+        
+        if (recreateSender) {
+            delete sender;
+            senders.erase(widg);
+            sender = new SerialSender(param.comParam, this);
+            senders[widg] = sender;
+            connect(widg, &BaseNaviWidget::sendData, sender, &Sender::setData);
+            connect(sender,&Sender::dataSent, ui->sendPanel,&SendWidget::setData);
+        } else {
+            sender->setTarget(QVariant::fromValue(param.comParam));
+        }
+    }
+    
     currentPage->setData(0, Qt::UserRole,QVariant::fromValue(param));
 }
 
@@ -206,16 +254,18 @@ void MainWindow::currentPageChange(QTreeWidgetItem *current, QTreeWidgetItem *pr
         BaseNaviWidget* widget = it->second;
         if(widget){
             SendParam param = current->data(0, Qt::UserRole).value<SendParam>();
-            ui->sendPanel->setSendParam(param.active, param.ip, param.port);
+            ui->sendPanel->setSendParam(param);
             ui->stackedWidget->setCurrentWidget(widget);
             if(previous) {
                 auto itp = pageMap.find(previous);
                 if (itp != pageMap.end()) {
-                    disconnect(itp->second,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+                    Sender* senderprev = senders[itp->second];
+                    disconnect(senderprev,&Sender::dataSent, ui->sendPanel,&SendWidget::setData);
                     disconnect(mapController,&MapControl::mapClicked, itp->second,&BaseNaviWidget::setPos);
                 }
             }
-            connect(widget,&BaseNaviWidget::sendData, ui->sendPanel,&SendWidget::setData);
+            Sender* sender = senders[widget];
+            connect(sender,&Sender::dataSent, ui->sendPanel,&SendWidget::setData);
             connect(mapController,&MapControl::mapClicked, widget,&BaseNaviWidget::setPos);
         }
     }
