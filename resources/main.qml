@@ -21,12 +21,18 @@ ApplicationWindow {
     Plugin {
         id: mapPlugin
         name: "osm" // Используем OSM плагин
+
+        PluginParameter {
+            name:"osm.mapping.custom.host"
+            value: "https://tile.openstreetmap.org/"
+        }
     }
 
     Map {
         id: map
         anchors.fill: parent
         plugin: mapPlugin
+        activeMapType: map.supportedMapTypes[map.supportedMapTypes.length - 1]
         center: QtPositioning.coordinate(55.751244, 37.618423) // Москва
         zoomLevel: 12
 
